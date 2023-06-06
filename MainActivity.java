@@ -2,7 +2,9 @@ package com.example.onlinebanking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,7 +17,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Map<String, Integer> userList = new HashMap<String, Integer>();
+    public Map<String, Integer> userList = new HashMap<String, Integer>();
+
 
     private EditText usernameView,pinNumberView;
     private Button registerButtonView,logInButtonView;
@@ -40,12 +43,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String nameInput = usernameView.getText().toString();
+                int pinInput = Integer.parseInt(pinNumberView.getText().toString());
 
-                if (nameInput.equals("Cristian")){
-                    Toast.makeText(MainActivity.this, nameInput + " is not a registered user. Try another one", Toast.LENGTH_LONG).show();
+                boolean isRegistered = false;
+
+                for (Map.Entry<String, Integer> entry : userList.entrySet()) {
+                    String username = entry.getKey();
+                    int pin = entry.getValue();
+
+                    if (nameInput.equals(username) && pinInput == pin) {
+                        isRegistered = true;
+                        break;
+                    }
+                }
+
+                if (isRegistered) {
+                    Toast.makeText(MainActivity.this, nameInput + " is a registered user.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MainActivity.this, nameInput + " is not a registered user. Try another one.", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+
+        registerButtonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(MainActivity.this,RegisterActivity.class);
+                startActivity(registerIntent);
+            }
+        });
+
+        Intent intent = getIntent();
+        String userNameCreation = intent.getStringExtra("usernameCreation");
+        int pinCreation = intent.getIntExtra("pinCreation",0);
+        userList.put(userNameCreation,pinCreation);
 
     }
 }
