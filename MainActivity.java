@@ -57,13 +57,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+
                 if (isRegistered) {
-                    Toast.makeText(MainActivity.this, nameInput + " is a registered user.", Toast.LENGTH_LONG).show();
+                    Intent secondActivity = new Intent(MainActivity.this,SecondActivity.class);
+                    secondActivity.putExtra("username",nameInput);
+                    Toast.makeText(MainActivity.this, "Log in successful", Toast.LENGTH_LONG).show();
+                    startActivity(secondActivity);
                 } else {
-                    Toast.makeText(MainActivity.this, nameInput + " is not a registered user. Try another one.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, nameInput + " either is not registered or the pin was incorrect , please Try again !", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
 
 
         registerButtonView.setOnClickListener(new View.OnClickListener() {
@@ -80,4 +85,5 @@ public class MainActivity extends AppCompatActivity {
         userList.put(userNameCreation,pinCreation);
 
     }
+
 }
