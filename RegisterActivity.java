@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -50,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                 intent.putExtra("usernameCreation",usernameCreation);
                 intent.putExtra("pinCreation",pinCreation);
+
+                Toast.makeText(RegisterActivity.this, usernameCreation + " has been registered !", Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
 
